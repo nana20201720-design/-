@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with game stats, status, customization, and friend list.",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "status": { "type": "string", "enum": ["online", "in_game", "offline"] },
+        "lastSeen": { "type": "number" },
+        "currentRoomCode": { "type": "string", "maxLength": 64 },
+        "friends": { "type": "array" },
+        "customization": { "type": "object" },
+        "stats": { "type": "object" }
+      },
+      "required": ["displayName", "status"]
+    },
+    "Room": {
+      "title": "Custom Room",
+      "description": "Multiplayer custom battle room lobby state.",
+      "type": "object",
+      "properties": {
+        "roomCode": { "type": "string", "maxLength": 32 },
+        "hostUid": { "type": "string", "maxLength": 128 },
+        "hostName": { "type": "string", "maxLength": 100 },
+        "mode": { "type": "string", "enum": ["1v1", "2v2", "3v3", "deathmatch"] },
+        "mapName": { "type": "string", "maxLength": 100 },
+        "maxPlayers": { "type": "number" },
+        "status": { "type": "string", "enum": ["lobby", "playing", "ended"] },
+        "players": { "type": "array" },
+        "createdAt": { "type": "number" },
+        "region": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["roomCode", "hostUid", "hostName", "mode", "mapName", "players", "status"]
+    },
+    "Invitation": {
+      "title": "Room Invitation",
+      "description": "Invite sent to friends to join custom rooms.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "fromUid": { "type": "string", "maxLength": 128 },
+        "fromName": { "type": "string", "maxLength": 100 },
+        "fromCamoColor": { "type": "string", "maxLength": 32 },
+        "toUid": { "type": "string", "maxLength": 128 },
+        "roomCode": { "type": "string", "maxLength": 32 },
+        "mode": { "type": "string", "maxLength": 32 },
+        "mapName": { "type": "string", "maxLength": 100 },
+        "createdAt": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] }
+      },
+      "required": ["id", "fromUid", "fromName", "toUid", "roomCode", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User account documents indexed by unique authentication ID."
+    },
+    "/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Multiplayer custom battle rooms indexed by room code."
+    },
+    "/invitations/{inviteId}": {
+      "schema": "Invitation",
+      "description": "Quick room invitation cards indexed by unique request ID."
+    }
+  }
+}

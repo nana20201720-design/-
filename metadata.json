@@ -1,0 +1,6 @@
+{
+  "name": "Mini Battle Arena",
+  "description": "A 2D cartoon arena shooter inspired by the classic Mini Militia gameplay featuring the iconic Outpost map with the central watchtower, drop shaft, subterranean tunnels, 4-player Free-for-All, and jetpack flight.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
